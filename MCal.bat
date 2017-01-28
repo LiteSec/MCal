@@ -62,7 +62,7 @@ echo.
 echo Downloading MCal deps using git...
 git\cmd\git.exe clone https://github.com/LiteSec/MCal.git
 echo.
-
+cd ..
 goto startup
 
 
@@ -185,6 +185,39 @@ echo Account saved!
 pause
 goto load
 
+
+
+
+:user_login
+cls
+echo Loading user profile
+call profiles\user.bat
+cls
+MCal_deps\chgcolor.exe f3
+:: spacing guide for me, window size is shown on line
+::   ________________________________________________________________________________
+echo ллллллллллллллллллллллллллллллл = MCal Money = ллллллллллллллллллллллллллллллллл
+echo.
+echo     __  _________      __
+echo    ^/  ^|^/  ^/ ____^/___ _^/ ^/
+echo   ^/ ^/^|_^/ ^/ ^/   ^/ __ ^`^/ ^/ 
+echo  ^/ ^/  ^/ ^/ ^/___^/ ^/_^/ ^/ ^/  
+echo ^/_^/  ^/_^/^\____^/^\__,_^/_^/  by LiteSec
+echo.
+echo Username: %fname%_%lname%
+set /p pcheck="Password: "
+if "%pcheck%" == "%password%" (
+goto dashboard
+) else (
+MCal_deps\chgcolor.exe fc
+echo Incorrect password!
+pause
+goto user_login
+)
+goto eof
+
+
+:dashboard
 
 
 
