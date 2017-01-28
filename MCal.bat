@@ -174,6 +174,7 @@ goto eof
 :: create new profile and write data
 cls
 echo Writing data...
+mkdir profiles
 echo set fname=%fname%> profiles\user.bat
 echo set lname=%lname%>> profiles\user.bat
 :: storing passwords in plain text ftw -- this will change soon though
