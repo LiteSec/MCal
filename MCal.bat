@@ -12,6 +12,11 @@
 :start
 :: we will check if MCal has been installed.
 IF NOT EXIST "MCal_deps\setup.chk" (
+goto installask
+:: doing this because of the way batch is shit
+)
+
+::installask
 cls 
 echo MCal has not been run before.
 CHOICE /C:yn "Install now"
