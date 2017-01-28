@@ -71,6 +71,7 @@ goto startup
 cls
 echo Starting MCal...
 cd MCal
+cd MCal
 :: as explained above
 call MCal.bat launch
 cd ..\..
