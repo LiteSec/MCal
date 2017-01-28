@@ -78,6 +78,7 @@ goto eof
 
 
 :load
+cls
 MCal_deps\chgcolor.exe f3
 :: spacing guide for me, window size is shown on line
 ::   ________________________________________________________________________________
@@ -179,6 +180,12 @@ echo set fname=%fname%> profiles\user.bat
 echo set lname=%lname%>> profiles\user.bat
 :: storing passwords in plain text ftw -- this will change soon though
 echo set password=%password%>> profiles\user.bat
+
+:: setting everyting to default values
+echo set sign=$>> profiles\user.bat
+echo set currentbal=0.00>> profiles\user.bat
+echo set todaysbal_ad=No change>> profiles\user.bat
+echo set todaysbal=0.00>> profiles\user.bat
 :: sleep for authenticity
 sleep 1 >NUL
 echo Account saved!
@@ -218,8 +225,30 @@ goto eof
 
 
 :dashboard
-
-
+cls
+echo Loading user profile
+call profiles\user.bat
+cls
+MCal_deps\chgcolor.exe f3
+:: spacing guide for me, window size is shown on line
+::   ________________________________________________________________________________
+echo ллллллллллллллллллллллллллллллл = MCal Money = ллллллллллллллллллллллллллллллллл
+echo.
+MCal_deps\chgcolor.exe f8
+echo                                        Total Balance: %sign%%currentbal%
+if "%todaysbal_ad%" == "No change" (
+MCal_deps\chgcolor.exe f8
+echo                                        Today^'s Change: %todaysbal_ad% - %sign%%currentbal%
+) 
+if "%todaysbal_ad%" == "Added" (
+MCal_deps\chgcolor.exe f2
+echo                                        Today^'s Change: %todaysbal_ad% - %sign%%currentbal%
+) 
+if "%todaysbal_ad%" == "Spent" (
+MCal_deps\chgcolor.exe f4
+echo                                        Today^'s Change: %todaysbal_ad% - %sign%%currentbal%
+) 
+pause
 
 
 :eof
