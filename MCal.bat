@@ -249,7 +249,209 @@ if "%todaysbal_ad%" == "Spent" (
 MCal_deps\chgcolor.exe f4
 echo                                        Today^'s Change: %todaysbal_ad% - %sign%%currentbal%
 ) 
-pause
+MCal_deps\chgcolor.exe f3
+echo.
+echo ^(A^)dd money to balance.
+echo ^(R^)ecord an expense.
+echo ^(V^)iew log.
+CHOICE /C:arv /N
+set menuchoice=%ERRORLEVEL%
+if "%menuchoice%" == "1" goto add_money
+if "%menuchoice%" == "2" goto expense
+if "%menuchoice%" == "3" goto view_log
+goto dashboard
+
+:add_money
+cls
+echo Loading user profile
+call profiles\user.bat
+cls
+MCal_deps\chgcolor.exe f3
+:: spacing guide for me, window size is shown on line
+::   ________________________________________________________________________________
+echo ллллллллллллллллллллллллллллллл = MCal Money = ллллллллллллллллллллллллллллллллл
+echo.
+echo ^(N^)otes, ^(C)^oins or ^(E^)xit?
+CHOICE /C:nce
+set menuchoice=%ERRORLEVEL%
+if "%menuchoice%" == "1" goto add_money_notes
+if "%menuchoice%" == "2" goto add_money_coins
+if "%menuchoice%" == "3" goto dashboard
+goto add_money
+
+:add_money_notes
+cls
+echo Loading user profile
+call profiles\user.bat
+set addedbal=0.00
+:add_money_notes_reload
+cls
+MCal_deps\chgcolor.exe f3
+:: spacing guide for me, window size is shown on line
+::   ________________________________________________________________________________
+echo ллллллллллллллллллллллллллллллл = MCal Money = ллллллллллллллллллллллллллллллллл
+echo.
+echo     __  _________      __
+echo    ^/  ^|^/  ^/ ____^/___ _^/ ^/
+echo   ^/ ^/^|_^/ ^/ ^/   ^/ __ ^`^/ ^/ 
+echo  ^/ ^/  ^/ ^/ ^/___^/ ^/_^/ ^/ ^/  
+echo ^/_^/  ^/_^/^\____^/^\__,_^/_^/  by LiteSec
+echo.
+MCal_deps\chgcolor.exe f2
+echo CURRENT BALANCE: %sign%%currentbal% ADDED BALANCE: %sign%%addedbal%
+echo.
+MCal_deps\chgcolor.exe f8
+echo A: $100 - Z: $50 - S: $20 - X: $10 - D: $5 - E: Exit
+CHOICE /C:azsxde
+set menuchoice=%ERRORLEVEL%
+if "%menuchoice%" == "1" goto addbal_100
+if "%menuchoice%" == "2" goto addbal_50
+if "%menuchoice%" == "3" goto addbal_20
+if "%menuchoice%" == "4" goto addbal_10
+if "%menuchoice%" == "5" goto addbal_5
+if "%menuchoice%" == "6" goto reload_and_exit
+goto add_money_notes_reload
+
+:addbal_100
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+100`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+100`) DO (
+SET addedbal=%%F
+)
+goto add_money_notes_reload
+:addbal_50
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+50`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+50`) DO (
+SET addedbal=%%F
+)
+goto add_money_notes_reload
+:addbal_20
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+20`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+20`) DO (
+SET addedbal=%%F
+)
+goto add_money_notes_reload
+:addbal_10
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+10`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+10`) DO (
+SET addedbal=%%F
+)
+goto add_money_notes_reload
+:addbal_5
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+5`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+5`) DO (
+SET addedbal=%%F
+)
+goto add_money_notes_reload
+
+:reload_and_exit
+echo set sign=$>> profiles\user.bat
+echo set currentbal=%currentbal%>> profiles\user.bat
+echo set todaysbal_ad=Added>> profiles\user.bat
+echo set todaysbal=%addedbal%>> profiles\user.bat
+goto add_money
+
+
+
+
+:add_money_coins
+cls
+echo Loading user profile
+call profiles\user.bat
+set addedbal=0.00
+:add_money_coins_reload
+cls
+MCal_deps\chgcolor.exe f3
+:: spacing guide for me, window size is shown on line
+::   ________________________________________________________________________________
+echo ллллллллллллллллллллллллллллллл = MCal Money = ллллллллллллллллллллллллллллллллл
+echo.
+echo     __  _________      __
+echo    ^/  ^|^/  ^/ ____^/___ _^/ ^/
+echo   ^/ ^/^|_^/ ^/ ^/   ^/ __ ^`^/ ^/ 
+echo  ^/ ^/  ^/ ^/ ^/___^/ ^/_^/ ^/ ^/  
+echo ^/_^/  ^/_^/^\____^/^\__,_^/_^/  by LiteSec
+echo.
+MCal_deps\chgcolor.exe f2
+echo CURRENT BALANCE: %sign%%currentbal% ADDED BALANCE: %sign%%addedbal%
+echo.
+MCal_deps\chgcolor.exe f8
+echo A: $2 - Z: $1 - S: $0.50 - X: $0.20 - D: $0.10 - C: $0.05 - E: Exit
+CHOICE /C:azsxdce
+set menuchoice=%ERRORLEVEL%
+if "%menuchoice%" == "1" goto addbal_2
+if "%menuchoice%" == "2" goto addbal_1
+if "%menuchoice%" == "3" goto addbal_050
+if "%menuchoice%" == "4" goto addbal_020
+if "%menuchoice%" == "5" goto addbal_010
+if "%menuchoice%" == "5" goto addbal_005
+if "%menuchoice%" == "6" goto reload_and_exit
+goto add_money_coins_reload
+
+:addbal_2
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+2`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+2`) DO (
+SET addedbal=%%F
+)
+goto add_money_coins_reload
+:addbal_1
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+1`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+1`) DO (
+SET addedbal=%%F
+)
+goto add_money_coins_reload
+:addbal_050
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+0.50`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+0.50`) DO (
+SET addedbal=%%F
+)
+goto add_money_coins_reload
+:addbal_020
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+0.20`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+0.20`) DO (
+SET addedbal=%%F
+)
+goto add_money_coins_reload
+:addbal_010
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+0.05`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+0.05`) DO (
+SET addedbal=%%F
+)
+goto add_money_coins_reload
+:addbal_005
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%+0.05`) DO (
+SET currentbal=%%F
+)
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %addedbal%+0.05`) DO (
+SET addedbal=%%F
+)
+goto add_money_coins_reload
+
+:reload_and_exit
+echo set sign=$>> profiles\user.bat
+echo set currentbal=%currentbal%>> profiles\user.bat
+echo set todaysbal_ad=Added>> profiles\user.bat
+echo set todaysbal=%addedbal%>> profiles\user.bat
+goto add_money
 
 
 :eof
