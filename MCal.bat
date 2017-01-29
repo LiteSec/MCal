@@ -254,11 +254,13 @@ echo.
 echo ^(A^)dd money to balance.
 echo ^(R^)ecord an expense.
 echo ^(V^)iew log.
+echo ^(E^)xit.
 CHOICE /C:arv /N
 set menuchoice=%ERRORLEVEL%
 if "%menuchoice%" == "1" goto add_money
 if "%menuchoice%" == "2" goto expense
 if "%menuchoice%" == "3" goto view_log
+if "%menuchoice%" == "4" goto eof
 goto dashboard
 
 :add_money
