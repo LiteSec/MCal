@@ -239,15 +239,15 @@ MCal_deps\chgcolor.exe f8
 echo                                        Total Balance: %sign%%currentbal%
 if "%todaysbal_ad%" == "No change" (
 MCal_deps\chgcolor.exe f8
-echo                                        Today^'s Change: %todaysbal_ad% - %sign%%currentbal%
+echo                                        Today^'s Change: %todaysbal_ad% - %sign%%todaysbal%
 ) 
 if "%todaysbal_ad%" == "Added" (
 MCal_deps\chgcolor.exe f2
-echo                                        Today^'s Change: %todaysbal_ad% - %sign%%currentbal%
+echo                                        Today^'s Change: %todaysbal_ad% - %sign%%todaysbal%
 ) 
 if "%todaysbal_ad%" == "Spent" (
 MCal_deps\chgcolor.exe f4
-echo                                        Today^'s Change: %todaysbal_ad% - %sign%%currentbal%
+echo                                        Today^'s Change: %todaysbal_ad% - %sign%%todaysbal%
 ) 
 MCal_deps\chgcolor.exe f3
 echo.
@@ -474,7 +474,7 @@ echo  ^/ ^/  ^/ ^/ ^/___^/ ^/_^/ ^/ ^/
 echo ^/_^/  ^/_^/^\____^/^\__,_^/_^/  by LiteSec
 echo.
 MCal_deps\chgcolor.exe f2
-echo CURRENT BALANCE: %sign%%currentbal% REMOVED BALANCE: %sign%%addedbal%
+echo CURRENT BALANCE: %sign%%currentbal% REMOVED BALANCE: %sign%%rembal%
 echo.
 MCal_deps\chgcolor.exe f8
 echo Enter spent amount, without dollarsigns, letters or commas.
