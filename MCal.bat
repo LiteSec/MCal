@@ -393,8 +393,8 @@ if "%menuchoice%" == "2" goto addbal_1
 if "%menuchoice%" == "3" goto addbal_050
 if "%menuchoice%" == "4" goto addbal_020
 if "%menuchoice%" == "5" goto addbal_010
-if "%menuchoice%" == "5" goto addbal_005
-if "%menuchoice%" == "6" goto reload_and_exit
+if "%menuchoice%" == "6" goto addbal_005
+if "%menuchoice%" == "7" goto reload_and_exit
 goto add_money_coins_reload
 
 :addbal_2
