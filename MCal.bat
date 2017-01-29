@@ -453,5 +453,37 @@ echo set todaysbal_ad=Added>> profiles\user.bat
 echo set todaysbal=%addedbal%>> profiles\user.bat
 goto add_money
 
+:expense
+cls
+echo Loading user profile
+call profiles\user.bat
+set rembal=0.00
+:expense_reload
+cls
+MCal_deps\chgcolor.exe f3
+:: spacing guide for me, window size is shown on line
+::   ________________________________________________________________________________
+echo ллллллллллллллллллллллллллллллл = MCal Money = ллллллллллллллллллллллллллллллллл
+echo.
+echo     __  _________      __
+echo    ^/  ^|^/  ^/ ____^/___ _^/ ^/
+echo   ^/ ^/^|_^/ ^/ ^/   ^/ __ ^`^/ ^/ 
+echo  ^/ ^/  ^/ ^/ ^/___^/ ^/_^/ ^/ ^/  
+echo ^/_^/  ^/_^/^\____^/^\__,_^/_^/  by LiteSec
+echo.
+MCal_deps\chgcolor.exe f2
+echo CURRENT BALANCE: %sign%%currentbal% REMOVED BALANCE: %sign%%addedbal%
+echo.
+MCal_deps\chgcolor.exe f8
+echo Enter spent amount, without dollarsigns, letters or commas.
+set /p spend="Spent: "
+FOR /F "tokens=* USEBACKQ" %%F IN (`MCal_deps\calc.exe %currentbal%-%spend%`) DO (
+SET currentbal=%%F
+)
+echo set sign=$>> profiles\user.bat
+echo set currentbal=%currentbal%>> profiles\user.bat
+echo set todaysbal_ad=Spent>> profiles\user.bat
+echo set todaysbal=%spend%>> profiles\user.bat
+goto dashboard
 
 :eof
